@@ -11,18 +11,25 @@
 
 namespace Mini\Controller;
 
+use Mini\Core\View;
+
 class HomeController
 {
+    var $View;
+   
+    function __construct() {
+        $this->View = new View();
+    }
     /**
      * PAGE: index
      * This method handles what happens when you move to http://yourproject/home/index (which is the default page btw)
      */
     public function index()
     {
+        // html data
+        $data["title"] = "Home"; /* for <title></title> inside header.php in this case */
         // load views
-        require APP . 'view/_templates/header.php';
-        require APP . 'view/home/index.php';
-        require APP . 'view/_templates/footer.php';
+        $this->View->render('home/index', $data);
     }
 
     /**
@@ -32,10 +39,10 @@ class HomeController
      */
     public function exampleOne()
     {
+        // html data
+        $data["title"] = "Example One"; /* for <title></title> inside header.php in this case */
         // load views
-        require APP . 'view/_templates/header.php';
-        require APP . 'view/home/example_one.php';
-        require APP . 'view/_templates/footer.php';
+        $this->View->render('example_one/index', $data);
     }
 
     /**
@@ -45,9 +52,9 @@ class HomeController
      */
     public function exampleTwo()
     {
+        // html data
+        $data["title"] = "Example Two"; /* for <title></title> inside header.php in this case */
         // load views
-        require APP . 'view/_templates/header.php';
-        require APP . 'view/home/example_two.php';
-        require APP . 'view/_templates/footer.php';
+        $this->View->render('example_two/index', $data);
     }
 }
