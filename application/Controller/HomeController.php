@@ -42,7 +42,7 @@ class HomeController
         // html data
         $data["title"] = "Example One"; /* for <title></title> inside header.php in this case */
         // load views
-        $this->View->render('example_one/index', $data);
+        $this->View->render('home/example_one', $data);
     }
 
     /**
@@ -55,6 +55,6 @@ class HomeController
         // html data
         $data["title"] = "Example Two"; /* for <title></title> inside header.php in this case */
         // load views
-        $this->View->render('example_two/index', $data);
+        $this->View->render('home/example_two', $data);
     }
 }
