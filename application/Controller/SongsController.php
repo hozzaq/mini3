@@ -14,10 +14,18 @@
 
 namespace Mini\Controller;
 
+use Mini\Core\View;
+
 use Mini\Model\Song;
 
 class SongsController
 {
+    var $View;
+   
+    function __construct() {
+        $this->View = new View();
+    }
+    
     /**
      * PAGE: index
      * This method handles what happens when you move to http://yourproject/songs/index
@@ -30,10 +38,10 @@ class SongsController
         $songs = $Song->getAllSongs();
         $amount_of_songs = $Song->getAmountOfSongs();
 
-       // load views. within the views we can echo out $songs and $amount_of_songs easily
-        require APP . 'view/_templates/header.php';
-        require APP . 'view/songs/index.php';
-        require APP . 'view/_templates/footer.php';
+            // html data
+            $data["title"] = "Songs Index"; /* for <title></title> inside header.php in this case */
+            // load views
+            $this->View->render('songs/index', $data);
     }
 
     /**
@@ -97,11 +105,10 @@ class SongsController
 
             // in a real application we would also check if this db entry exists and therefore show the result or
             // redirect the user to an error page or similar
-
-            // load views. within the views we can echo out $song easily
-            require APP . 'view/_templates/header.php';
-            require APP . 'view/songs/edit.php';
-            require APP . 'view/_templates/footer.php';
+            // html data
+            $data["title"] = "Edit Songs"; /* for <title></title> inside header.php in this case */
+            // load views
+            $this->View->render('songs/edit', $data);
         } else {
             // redirect user to songs index page (as we don't have a song_id)
             header('location: ' . URL . 'songs/index');
