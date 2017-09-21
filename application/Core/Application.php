@@ -42,7 +42,7 @@ class Application
                 
                 if (!empty($this->url_params)) {
                     // Call the method and pass arguments to it
-                    call_user_func_array(array($this->url_controller, $this->url_action), $this->url_params);
+                    call_user_func_array(array($this->url_controller, $this->url_action), array($this->url_params));
                 } else {
                     // If no parameters are given, just call the method without parameters, like $this->home->method();
                     $this->url_controller->{$this->url_action}();
@@ -84,9 +84,10 @@ class Application
                 $param = array_values($url);
                 for ($i=0; $i < count($param); $i++) { 
                     if ($i % 2 == 0) {
-                        $this->url_params[$param[$i]] = $param[$i+1];
+                        $params[$param[$i]] = $param[$i+1];
                     }
                 }
+                $this->url_params = $params;
             }
 
             // for debugging. uncomment this if you have problems with the URL
