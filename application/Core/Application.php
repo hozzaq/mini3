@@ -67,23 +67,27 @@ class Application
     private function splitUrl()
     {
         if (isset($_GET['url'])) {
-
-            // split URL
+            
+            // split url
             $url = trim($_GET['url'], '/');
             $url = filter_var($url, FILTER_SANITIZE_URL);
             $url = explode('/', $url);
-
             // Put URL parts into according properties
             // By the way, the syntax here is just a short form of if/else, called "Ternary Operators"
             // @see http://davidwalsh.name/php-shorthand-if-else-ternary-operators
             $this->url_controller = isset($url[0]) ? $url[0] : null;
             $this->url_action = isset($url[1]) ? $url[1] : null;
-
-            // Remove controller and action from the split URL
-            unset($url[0], $url[1]);
-
-            // Rebase array keys and store the URL params
-            $this->url_params = array_values($url);
+            // url_action no longer get value for easier multiple parameter
+            // now you can do like //site/controller/action/param1/value1/param2/value2 and so on
+            if (count($url) > 2) {
+                unset($url[0], $url[1]);
+                $param = array_values($url);
+                for ($i=0; $i < count($param); $i++) { 
+                    if ($i % 2 == 0) {
+                        $this->url_params[$param[$i]] = $param[$i+1];
+                    }
+                }
+            }
 
             // for debugging. uncomment this if you have problems with the URL
             //echo 'Controller: ' . $this->url_controller . '<br>';
